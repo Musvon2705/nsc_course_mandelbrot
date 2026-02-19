@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy, numba, pytest, dask, cmath
 import time
+from utils.benchmark_script import benchmark
 
 def create_complex_grid(x: list, y: list, resolution: int = 1024):
     x_grid = np.linspace(x[0], x[1], resolution, endpoint=True)
@@ -27,24 +28,21 @@ def mandelbrot_calculation(complex_grid: np.ndarray, max_iter: int = 100):
             n_grid[nx, ny] = n
     return n_grid
 
-# Set regions
-x = [-2, 1]
-y = [-1.5, 1.5]
- 
-start_time = time.time()
+if __name__ == "__main__":
+    # Set regions
+    x = [-2, 1]
+    y = [-1.5, 1.5]
 
-# Create complex number grid
-grid = create_complex_grid(x, y, 4096)
+    benchmark(mandelbrot_calculation, create_complex_grid(x, y, 1024), 100)
 
-# Create mandelbrot set from complex grid
-n_grid = mandelbrot_calculation(grid, 100)
+    # Create complex number grid
+    grid = create_complex_grid(x, y, 1024)
 
-end_time = time.time()
+    # Create mandelbrot set from complex grid
+    n_grid = mandelbrot_calculation(grid, 100)
 
-# Naive implementation time: 4.5468645095825195 seconds (for 1024 resolution and 100 as max iterations)
-print(f"Naive implementation time: {end_time-start_time} seconds")
 
-# Show mandelbrot set
-plt.imshow(n_grid)
-plt.axis('off')
-plt.show()
+    # Show mandelbrot set
+    plt.imshow(n_grid)
+    plt.axis('off')
+    plt.show()
