@@ -3,7 +3,9 @@ import matplotlib.pyplot as plt
 import scipy, numba, pytest, dask, cmath
 import time
 from utils.benchmark_script import benchmark
+from line_profiler import profile
 
+@profile
 def create_complex_grid(x: list, y: list, resolution: int = 1024):
     x_grid = np.linspace(x[0], x[1], resolution, endpoint=True)
     y_grid = np.linspace(y[0], y[1], resolution, endpoint=True)
@@ -14,6 +16,7 @@ def create_complex_grid(x: list, y: list, resolution: int = 1024):
             complex_grid[i, j] = complex(x_grid[i], y_grid[j])
     return complex_grid
 
+@profile
 def mandelbrot_calculation(complex_grid: np.ndarray, max_iter: int = 100):
     grid_size = complex_grid.shape
     n_grid = np.zeros((grid_size[0], grid_size[1]))
@@ -33,7 +36,7 @@ if __name__ == "__main__":
     x = [-2, 1]
     y = [-1.5, 1.5]
 
-    benchmark(mandelbrot_calculation, create_complex_grid(x, y, 1024), 100)
+    #benchmark(mandelbrot_calculation, create_complex_grid(x, y, 1024), 100)
 
     # Create complex number grid
     grid = create_complex_grid(x, y, 1024)
