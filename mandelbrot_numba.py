@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from numba import njit, prange
+from numba import njit, prange, float64, float32
 import time
 from utils.benchmark_script import benchmark
 
@@ -11,7 +11,7 @@ def mandelbrot_calculation(x: list,
                            max_iter: int = 100):
     x_grid = np.linspace(x[0], x[1], resolution)
     y_grid = np.linspace(y[0], y[1], resolution)
-    result = np.zeros((resolution, resolution), dtype=np.int32)
+    result = np.zeros((resolution, resolution), dtype=float64)
 
     for ny in range(resolution):
         for nx in range(resolution):
