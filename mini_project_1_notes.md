@@ -2,11 +2,11 @@
 
 
 ## Results
-| **Implementation** | **Benchmark Time (seconds)** |
-| ----------- | ----------- |
-| Naive | 10.9860 |
-| Numpy | 2.1987 |
-| Numba | 0.1263 |
+| **Implementation** | **Benchmark Time (seconds)** | **Speedup** |
+| ----------- | ----------- | ----------- |
+| Naive | 5.811 | 0 |
+| Numpy | 1.243 | 4 |
+| Numba | 0.0539 | 108 |
 
 ## cProfiler
 
@@ -161,3 +161,21 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 line profiler tell you about the inner loop?)*
   * It tells me that using ```abs()``` uses a lot of time.
 
+## Datatypes
+
+### Float64
+Runtime: 0.0542 seconds
+![Mandelbrot with float64](float64_mandelbrot.jpeg)
+![Zoomed-In Mandelbrot with float64](float64_mandelbrot_zoom.jpeg)
+
+
+### Float32
+Runtime: 0.0522 seconds
+![Mandelbrot with float32](float32_mandelbrot.jpeg)
+![Zoomed-In Mandelbrot with float32](float32_mandelbrot_zoom.jpeg)
+
+### Float16
+Does not work.
+
+### Conclusion
+I honestly can't see the difference between the float32 and float64. I have even tried with a higher resolution, but still do not see the difference. And the time difference is also not significant, so it would be reasonable to use either. If I set the resolution to 32.768, then it might start being noticable, but at this moment, it is not. In that case, depending on what the purpose was, you could choose float32 for faster execution and float64 for more precise results.
